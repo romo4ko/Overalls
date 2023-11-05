@@ -15,13 +15,12 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('employer_id')->unsigned()->index();
             $table->bigInteger('overall_id')->unsigned()->index();
-            $table->date('date');
-
         });
         Schema::table('receiving', function($table) {
             $table->softDeletes();
-            $table->foreign('employer_id')->references('id')->on('employers');
-            $table->foreign('overall_id')->references('id')->on('overalls');
+            $table->timestamps();
+            $table->foreign('employer_id')->references('id')->on('employers')->onDelete('cascade');
+            $table->foreign('overall_id')->references('id')->on('overalls')->onDelete('cascade');
         });
     }
 

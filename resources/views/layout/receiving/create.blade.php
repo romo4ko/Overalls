@@ -7,7 +7,7 @@
             <h2>Add New Receiving</h2>
         </div>
         <div class="pull-right mb-2">
-            <a class="btn btn-primary" href="{{ route('layout.receiving.index') }}">Back</a>
+            <a class="btn btn-primary" href="{{ route('receiving.index') }}">Back</a>
         </div>
     </div>
 </div>
@@ -22,7 +22,7 @@
     </div>
 @endif
 
-<form action="{{ route('layout.receiving.store') }}" method="POST">
+<form action="{{ route('receiving.store') }}" method="POST">
     @csrf
 
      <div class="row">
@@ -45,13 +45,6 @@
                         <option value="{{ $overall->id }}">{{ $overall->type }}</option>
                     @endforeach
                 </select>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
-            <div class="form-group">
-                <strong class="mt-2">Date:</strong>
-                <input type="date" name="date" class="form-control mt-2" placeholder="Date">
             </div>
         </div>
 

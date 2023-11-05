@@ -7,7 +7,7 @@
             <h2>Add New Workshop</h2>
         </div>
         <div class="pull-right mb-2">
-            <a class="btn btn-primary" href="{{ route('layout.workshops.index') }}">Back</a>
+            <a class="btn btn-primary" href="{{ route('workshops.index') }}">Back</a>
         </div>
     </div>
 </div>
@@ -22,7 +22,7 @@
     </div>
 @endif
 
-<form action="{{ route('layout.workshops.store') }}" method="POST">
+<form action="{{ route('workshops.store') }}" method="POST">
     @csrf
 
      <div class="row">

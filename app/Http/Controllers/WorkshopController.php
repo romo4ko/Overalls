@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employer;
 use App\Models\Workshop;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -13,7 +14,7 @@ class WorkshopController extends Controller
      */
     public function index()
     {
-        $workshops = Workshop::all();
+        $workshops = Workshop::all()->sortByDesc('updated_at');
         return view('layout.workshops.index', compact('workshops'));
     }
 
@@ -66,7 +67,7 @@ class WorkshopController extends Controller
 
         $workshop->update($request->all());
 
-        return redirect()->route('layout.workshops.index')->with('success','Workshops updated successfully');
+        return redirect()->route('workshops.index')->with('success','Workshops updated successfully');
     }
 
     /**
@@ -76,8 +77,10 @@ class WorkshopController extends Controller
     {
         $workshop->delete();
 
+        Employer::where('workshop_id', $workshop->id)->delete();
+
         return redirect()
-            ->route('layout.workshops.index')
+            ->route('workshops.index')
             ->with('success','Workshop deleted successfully');
     }
 }

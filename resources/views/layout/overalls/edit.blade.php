@@ -7,7 +7,7 @@
                 <h2>Edit Overall</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary mb-2" href="{{ route('layout.overalls.index') }}">Back</a>
+                <a class="btn btn-primary mb-2" href="{{ route('overalls.index') }}">Back</a>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
         </div>
     @endif
 
-    <form action="{{ route('layout.overalls.update',$overall->id) }}" method="POST">
+    <form action="{{ route('overalls.update',$overall->id) }}" method="POST">
         @csrf
 
         @method('PUT')

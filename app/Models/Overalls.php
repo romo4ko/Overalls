@@ -12,7 +12,7 @@ class Overalls extends Model
 
     use SoftDeletes;
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [
         'type', 'term', 'cost'

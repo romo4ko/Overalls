@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employer;
+use App\Models\Receiving;
 use App\Models\Workshop;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -14,7 +15,7 @@ class EmployerController extends Controller
      */
     public function index()
     {
-        $employers = Employer::all();
+        $employers = Employer::all()->sortByDesc('updated_at');
         return view('layout.employers.index', compact('employers'));
     }
 
@@ -77,7 +78,7 @@ class EmployerController extends Controller
 
         $employer->update($request->all());
 
-        return redirect()->route('layout.employers.index')->with('success','Employer updated successfully');
+        return redirect()->route('employers.index')->with('success','Employer updated successfully');
     }
 
     /**
@@ -87,8 +88,10 @@ class EmployerController extends Controller
     {
         $employer->delete();
 
+        Receiving::where('employer_id', $employer->id)->delete();
+
         return redirect()
-            ->route('layout.employers.index')
+            ->route('employers.index')
             ->with('success','Employer deleted successfully');
     }
 }

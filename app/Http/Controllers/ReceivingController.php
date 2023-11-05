@@ -15,7 +15,7 @@ class ReceivingController extends Controller
      */
     public function index()
     {
-        $receiving = Receiving::all();
+        $receiving = Receiving::all()->sortByDesc('updated_at');
         return view('layout.receiving.index', compact('receiving'));
     }
 
@@ -37,7 +37,6 @@ class ReceivingController extends Controller
         $request->validate([
             'employer_id' => 'required',
             'overall_id' => 'required',
-            'date' => 'required', 
         ]);
 
         Receiving::create($request->all());
@@ -71,12 +70,11 @@ class ReceivingController extends Controller
         $request->validate([
             'employer_id' => 'required',
             'overall_id' => 'required',
-            'date' => 'required', 
         ]);
 
         $receiving->update($request->all());
 
-        return redirect()->route('layout.receiving.index')->with('success','Receiving updated successfully');
+        return redirect()->route('receiving.index')->with('success','Receiving updated successfully');
     }
 
     /**
@@ -87,7 +85,7 @@ class ReceivingController extends Controller
         $receiving->delete();
 
         return redirect()
-            ->route('layout.receiving.index')
+            ->route('receiving.index')
             ->with('success','Receiving deleted successfully');
     }
 }

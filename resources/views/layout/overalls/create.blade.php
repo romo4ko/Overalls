@@ -7,7 +7,7 @@
             <h2>Add New Overall</h2>
         </div>
         <div class="pull-right mb-2">
-            <a class="btn btn-primary" href="{{ route('layout.overalls.index') }}">Back</a>
+            <a class="btn btn-primary" href="{{ route('overalls.index') }}">Back</a>
         </div>
     </div>
 </div>
@@ -22,7 +22,7 @@
     </div>
 @endif
 
-<form action="{{ route('layout.overalls.store') }}" method="POST">
+<form action="{{ route('overalls.store') }}" method="POST">
     @csrf
 
      <div class="row">

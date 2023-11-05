@@ -7,7 +7,7 @@
                 <h2> Show Receiving</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('layout.receiving.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('receiving.index') }}"> Back</a>
             </div>
         </div>
     </div>
@@ -19,7 +19,7 @@
                 <td>{{ $receiving->employer->firstname }} {{ $receiving->employer->lastname }}</td> </br>
                 <strong>Overall:</strong>
                 <td>{{ $receiving->overall->type }}</td> </br>
-                <strong>Date:</strong>
+                <strong>Datetime:</strong>
                 <td>{{ $receiving->date }}</td> </br>
             </div>
         </div>

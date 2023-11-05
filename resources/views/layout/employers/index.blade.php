@@ -7,7 +7,7 @@
                 <h2></h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('layout.employers.create') }}">Create Employer</a>
+                <a class="btn btn-success" href="{{ route('employers.create') }}">Create Employer</a>
             </div>
         </div>
     </div>
@@ -34,9 +34,9 @@
             <td>{{ $employer->workshop->name }}</td>
             <td>{{ $employer->sale }} <span>%</span> </td>
             <td class="d-flex justify-content-around">
-                <a class="btn btn-info" href="{{ route('layout.employers.show',$employer->id) }}">Show</a>
-                <a class="btn btn-primary" href="{{ route('layout.employers.edit',$employer->id) }}">Edit</a>
-                <form action="{{ route('layout.employers.destroy',$employer->id) }}" method="POST">
+                <a class="btn btn-info" href="{{ route('employers.show',$employer->id) }}">Show</a>
+                <a class="btn btn-primary" href="{{ route('employers.edit',$employer->id) }}">Edit</a>
+                <form action="{{ route('employers.destroy',$employer->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Delete</button>

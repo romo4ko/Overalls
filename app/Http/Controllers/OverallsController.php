@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Overalls;
+use App\Models\Receiving;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -13,7 +14,7 @@ class OverallsController extends Controller
      */
     public function index()
     {
-        $overalls = Overalls::all();
+        $overalls = Overalls::all()->sortByDesc('updated_at');
         return view('layout.overalls.index', compact('overalls'));
     }
 
@@ -70,7 +71,7 @@ class OverallsController extends Controller
 
         $overall->update($request->all());
 
-        return redirect()->route('layout.overalls.index')->with('success','Overalls updated successfully');
+        return redirect()->route('overalls.index')->with('success','Overalls updated successfully');
     }
 
     /**
@@ -79,9 +80,11 @@ class OverallsController extends Controller
     public function destroy(Overalls $overall)
     {
         $overall->delete();
+        
+        Receiving::where('overall_id', $overall->id)->delete();
 
         return redirect()
-            ->route('layout.overalls.index')
+            ->route('overalls.index')
             ->with('success','Overall deleted successfully');
     }
 }

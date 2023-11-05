@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Arr;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,7 @@ class WorkshopFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => Arr::random(['assambly', 'electrical installation', 'welding']),
         ];
     }
 }

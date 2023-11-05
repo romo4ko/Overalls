@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Arr;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -18,7 +19,7 @@ class OverallsFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => fake()->name(), 
+            'type' => Arr::random(['from electricity', 'protective', 'temperature resistant']), 
             'term' => Carbon::now()->subMonths(rand(1, 12)), 
             'cost' => random_int(500, 5000),
         ];

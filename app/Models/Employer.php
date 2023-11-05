@@ -11,14 +11,15 @@ class Employer extends Model
     use HasFactory;
 
     use SoftDeletes;
-    public $timestamps = false;
+    public $timestamps = true;
+
+    protected $fillable = [
+        'firstname', 'lastname', 'job', 'workshop_id', 'sale'
+    ];
 
     public function workshop()
     {
       return $this->belongsTo(Workshop::class, 'workshop_id');
     }
 
-    protected $fillable = [
-        'firstname', 'lastname', 'job', 'workshop_id', 'sale'
-    ];
 }

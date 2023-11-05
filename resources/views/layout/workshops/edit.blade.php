@@ -7,7 +7,7 @@
                 <h2>Edit Workshop</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary mb-2" href="{{ route('layout.workshops.index') }}">Back</a>
+                <a class="btn btn-primary mb-2" href="{{ route('workshops.index') }}">Back</a>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
         </div>
     @endif
 
-    <form action="{{ route('layout.workshops.update',$workshop->id) }}" method="POST">
+    <form action="{{ route('workshops.update',$workshop->id) }}" method="POST">
         @csrf
 
         @method('PUT')

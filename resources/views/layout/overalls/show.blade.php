@@ -7,7 +7,7 @@
                 <h2> Show Overall</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('layout.overalls.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('overalls.index') }}"> Back</a>
             </div>
         </div>
     </div>

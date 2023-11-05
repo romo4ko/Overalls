@@ -7,7 +7,7 @@
                 <h2>Edit Receiving</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary mb-2" href="{{ route('layout.receiving.index') }}">Back</a>
+                <a class="btn btn-primary mb-2" href="{{ route('receiving.index') }}">Back</a>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
         </div>
     @endif
 
-    <form action="{{ route('layout.receiving.update',$receiving->id) }}" method="POST">
+    <form action="{{ route('receiving.update',$receiving->id) }}" method="POST">
         @csrf
 
         @method('PUT')
@@ -54,13 +54,6 @@
                         @endif   
                     @endforeach
                 </select>
-            </div>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-12 mb-2">
-            <div class="form-group">
-                <strong class="mt-2">Date:</strong>
-                <input type="date" name="date" value="{{ $receiving->date }}" class="form-control mt-2" placeholder="Date">
             </div>
         </div>
 

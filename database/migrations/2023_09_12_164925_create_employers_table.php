@@ -22,7 +22,8 @@ return new class extends Migration
         });
         Schema::table('employers', function($table) {
             $table->softDeletes();
-            $table->foreign('workshop_id')->references('id')->on('workshops');
+            $table->timestamps();
+            $table->foreign('workshop_id')->references('id')->on('workshops')->onDelete('cascade');
         });
     }
 

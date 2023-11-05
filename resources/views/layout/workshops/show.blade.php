@@ -7,7 +7,7 @@
                 <h2> Show Workshop</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('layout.workshops.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('workshops.index') }}"> Back</a>
             </div>
         </div>
     </div>

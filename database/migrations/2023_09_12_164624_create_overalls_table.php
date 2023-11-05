@@ -20,6 +20,7 @@ return new class extends Migration
 
         Schema::table('overalls', function (Blueprint $table) {
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

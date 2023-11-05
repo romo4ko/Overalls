@@ -7,7 +7,7 @@
                 <h2> Show Employer</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('layout.employers.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('employers.index') }}"> Back</a>
             </div>
         </div>
     </div>

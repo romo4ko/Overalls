@@ -7,7 +7,7 @@
             <h2>Add New Employer</h2>
         </div>
         <div class="pull-right mb-2">
-            <a class="btn btn-primary" href="{{ route('layout.employers.index') }}">Back</a>
+            <a class="btn btn-primary" href="{{ route('employers.index') }}">Back</a>
         </div>
     </div>
 </div>
@@ -22,7 +22,7 @@
     </div>
 @endif
 
-<form action="{{ route('layout.employers.store') }}" method="POST">
+<form action="{{ route('employers.store') }}" method="POST">
     @csrf
 
      <div class="row">

@@ -14,7 +14,7 @@ class Receiving extends Model
 
     public $table = 'receiving';
 
-    public $timestamps = false;
+    public $timestamps = true;
     
     public function employer()
     {
@@ -27,6 +27,6 @@ class Receiving extends Model
     }
 
     protected $fillable = [
-        'employer_id', 'overall_id', 'date'
+        'employer_id', 'overall_id'
     ];
 }
