@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
         });
+
+        Schema::table('workshops', function (Blueprint $table) {
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -22,6 +26,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('workshops', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
+
         Schema::dropIfExists('workshops');
     }
 };

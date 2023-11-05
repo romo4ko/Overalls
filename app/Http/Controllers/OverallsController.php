@@ -13,8 +13,8 @@ class OverallsController extends Controller
      */
     public function index()
     {
-        $posts = Overalls::all();
-        return view('overalls.index', compact('overalls'));
+        $overalls = Overalls::all();
+        return view('layout.overalls.index', compact('overalls'));
     }
 
     /**
@@ -22,7 +22,7 @@ class OverallsController extends Controller
      */
     public function create()
     {
-        return view('overalls.create');
+        return view('layout.overalls.create');
     }
 
     /**
@@ -33,55 +33,55 @@ class OverallsController extends Controller
         $request->validate([
             'type' => 'required',
             'term' => 'required',
-            'cost' => 'required', 
+            'cost' => 'required',
         ]);
 
         Overalls::create($request->all());
 
-        return redirect()->route('overalls.index')->with('success','Overalls created successfully.');
+        return redirect()->route('layout.overalls.index')->with('success','Overall created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Overalls $overall)
     {
-        return view('overalls.show', compact('overalls'));
+        return view('layout.overalls.show', compact('overall'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Overalls $overall)
     {
-        return view('overalls.edit',compact('overalls'));
+        return view('layout.overalls.edit',compact('overall'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Overalls $overalls)
+    public function update(Request $request, Overalls $overall)
     {
         $request->validate([
             'type' => 'required',
             'term' => 'required',
-            'cost' => 'reqired', 
+            'cost' => 'required',
         ]);
 
-        $overalls->update($request->all());
+        $overall->update($request->all());
 
-        return redirect()->route('overalls.index')->with('success','Overalls updated successfully');
+        return redirect()->route('layout.overalls.index')->with('success','Overalls updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Overalls $overalls)
+    public function destroy(Overalls $overall)
     {
-        $overalls->delete();
+        $overall->delete();
 
         return redirect()
-            ->route('overalls.index')
-            ->with('success','Overalls deleted successfully');
+            ->route('layout.overalls.index')
+            ->with('success','Overall deleted successfully');
     }
 }

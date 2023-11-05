@@ -42,7 +42,7 @@ class WorkshopController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Workshop $workshop)
     {
         return view('layout.workshops.show', compact('workshop'));
     }
@@ -50,7 +50,7 @@ class WorkshopController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Workshop $workshop)
     {
         return view('layout.workshops.edit',compact('workshop'));
     }
@@ -58,17 +58,13 @@ class WorkshopController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Workshop $workshops)
+    public function update(Request $request, Workshop $workshop)
     {
         $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'job' => 'reqired', 
-            'workshop_id' => 'reqired',
-            'sale' => 'reqired',
+            'name' => 'required',
         ]);
 
-        $workshops->update($request->all());
+        $workshop->update($request->all());
 
         return redirect()->route('layout.workshops.index')->with('success','Workshops updated successfully');
     }
@@ -81,7 +77,7 @@ class WorkshopController extends Controller
         $workshop->delete();
 
         return redirect()
-            ->route('layout.workshop.index')
+            ->route('layout.workshops.index')
             ->with('success','Workshop deleted successfully');
     }
 }

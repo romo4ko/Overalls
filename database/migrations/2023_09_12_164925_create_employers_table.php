@@ -21,6 +21,7 @@ return new class extends Migration
 
         });
         Schema::table('employers', function($table) {
+            $table->softDeletes();
             $table->foreign('workshop_id')->references('id')->on('workshops');
         });
     }
@@ -30,6 +31,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('employers', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
+
         Schema::dropIfExists('employers');
     }
 };

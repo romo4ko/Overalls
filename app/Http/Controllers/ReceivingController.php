@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employer;
+use App\Models\Overalls;
 use App\Models\Receiving;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -13,8 +15,8 @@ class ReceivingController extends Controller
      */
     public function index()
     {
-        $posts = Receiving::all();
-        return view('receiving.index', compact('receiving'));
+        $receiving = Receiving::all();
+        return view('layout.receiving.index', compact('receiving'));
     }
 
     /**
@@ -22,7 +24,9 @@ class ReceivingController extends Controller
      */
     public function create()
     {
-        return view('receiving.create');
+        $employers = Employer::all();
+        $overalls = Overalls::all();
+        return view('layout.receiving.create', compact('employers', 'overalls'));
     }
 
     /**
@@ -31,32 +35,32 @@ class ReceivingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'job' => 'reqired', 
-            'workshop_id' => 'reqired',
-            'sale' => 'reqired',
+            'employer_id' => 'required',
+            'overall_id' => 'required',
+            'date' => 'required', 
         ]);
 
         Receiving::create($request->all());
 
-        return redirect()->route('receiving.index')->with('success','Receiving created successfully.');
+        return redirect()->route('layout.receiving.index')->with('success','Receiving created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Receiving $receiving)
     {
-        return view('receiving.show', compact('receiving'));
+        return view('layout.receiving.show', compact('receiving'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Receiving $receiving)
     {
-        return view('receiving.edit',compact('receiving'));
+        $employers = Employer::all();
+        $overalls = Overalls::all();
+        return view('layout.receiving.edit',compact('receiving', 'employers', 'overalls'));
     }
 
     /**
@@ -65,16 +69,14 @@ class ReceivingController extends Controller
     public function update(Request $request, Receiving $receiving)
     {
         $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'job' => 'reqired', 
-            'workshop_id' => 'reqired',
-            'sale' => 'reqired',
+            'employer_id' => 'required',
+            'overall_id' => 'required',
+            'date' => 'required', 
         ]);
 
         $receiving->update($request->all());
 
-        return redirect()->route('receiving.index')->with('success','Receiving updated successfully');
+        return redirect()->route('layout.receiving.index')->with('success','Receiving updated successfully');
     }
 
     /**
@@ -85,7 +87,7 @@ class ReceivingController extends Controller
         $receiving->delete();
 
         return redirect()
-            ->route('receiving.index')
+            ->route('layout.receiving.index')
             ->with('success','Receiving deleted successfully');
     }
 }

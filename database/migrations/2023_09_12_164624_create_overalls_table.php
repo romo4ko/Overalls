@@ -17,6 +17,10 @@ return new class extends Migration
             $table->date('term');
             $table->double('cost');
         });
+
+        Schema::table('overalls', function (Blueprint $table) {
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -24,6 +28,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('overalls', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
+
         Schema::dropIfExists('overalls');
     }
 };

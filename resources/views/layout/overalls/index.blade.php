@@ -7,7 +7,7 @@
                 <h2></h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('layout.workshops.create') }}">Create Workshop</a>
+                <a class="btn btn-success" href="{{ route('layout.overalls.create') }}">Create Overall</a>
             </div>
         </div>
     </div>
@@ -20,15 +20,19 @@
 
     <table class="table table-bordered">
         <tr>
-            <th>Name</th>
+            <th>Type</th>
+            <th>Term</th>
+            <th>Cost</th>
         </tr>
-        @foreach ($workshops as $workshop)
+        @foreach ($overalls as $overall)
         <tr>
-            <td>{{ $workshop->name }}</td>
+            <td>{{ $overall->type }}</td>
+            <td>{{ $overall->term }}</td>
+            <td>{{ $overall->cost }} <span>₽</span> </td>
             <td class="d-flex justify-content-around">
-                <a class="btn btn-info" href="{{ route('layout.workshops.show',$workshop->id) }}">Show</a>
-                <a class="btn btn-primary" href="{{ route('layout.workshops.edit',$workshop->id) }}">Edit</a>
-                <form action="{{ route('layout.workshops.destroy',$workshop->id) }}" method="POST">
+                <a class="btn btn-info" href="{{ route('layout.overalls.show',$overall->id) }}">Show</a>
+                <a class="btn btn-primary" href="{{ route('layout.overalls.edit',$overall->id) }}">Edit</a>
+                <form action="{{ route('layout.overalls.destroy',$overall->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Delete</button>

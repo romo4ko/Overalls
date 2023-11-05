@@ -19,6 +19,7 @@ return new class extends Migration
 
         });
         Schema::table('receiving', function($table) {
+            $table->softDeletes();
             $table->foreign('employer_id')->references('id')->on('employers');
             $table->foreign('overall_id')->references('id')->on('overalls');
         });
@@ -29,6 +30,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('receiving', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
+
         Schema::dropIfExists('receiving');
     }
 };

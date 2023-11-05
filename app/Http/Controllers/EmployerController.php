@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employer;
+use App\Models\Workshop;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -13,8 +14,8 @@ class EmployerController extends Controller
      */
     public function index()
     {
-        $posts = Employer::all();
-        return view('employers.index', compact('employers'));
+        $employers = Employer::all();
+        return view('layout.employers.index', compact('employers'));
     }
 
     /**
@@ -22,7 +23,8 @@ class EmployerController extends Controller
      */
     public function create()
     {
-        return view('employers.create');
+        $workshops = Workshop::all();
+        return view('layout.employers.create', compact('workshops'));
     }
 
     /**
@@ -33,30 +35,31 @@ class EmployerController extends Controller
         $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
-            'job' => 'reqired', 
-            'workshop_id' => 'reqired',
-            'sale' => 'reqired',
+            'job' => 'required', 
+            'workshop_id' => 'required',
+            'sale',
         ]);
 
         Employer::create($request->all());
 
-        return redirect()->route('employers.index')->with('success','Employer created successfully.');
+        return redirect()->route('layout.employers.index')->with('success','Employer created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Employer $employer)
     {
-        return view('employers.show', compact('employer'));
+        return view('layout.employers.show', compact('employer'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Employer $employer)
     {
-        return view('employers.edit',compact('employer'));
+        $workshops = Workshop::all();
+        return view('layout.employers.edit',compact('employer', 'workshops'));
     }
 
     /**
@@ -74,7 +77,7 @@ class EmployerController extends Controller
 
         $employer->update($request->all());
 
-        return redirect()->route('employers.index')->with('success','Employer updated successfully');
+        return redirect()->route('layout.employers.index')->with('success','Employer updated successfully');
     }
 
     /**
@@ -85,7 +88,7 @@ class EmployerController extends Controller
         $employer->delete();
 
         return redirect()
-            ->route('employer.index')
+            ->route('layout.employers.index')
             ->with('success','Employer deleted successfully');
     }
 }
