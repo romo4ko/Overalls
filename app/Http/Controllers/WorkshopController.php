@@ -32,12 +32,12 @@ class WorkshopController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:50',
         ]);
 
         Workshop::create($request->all());
 
-        return redirect()->route('layout.workshops.index')->with('success','Workshop created successfully.');
+        return redirect()->route('workshops.index')->with('success','Workshop created successfully.');
     }
 
     /**
@@ -62,7 +62,7 @@ class WorkshopController extends Controller
     public function update(Request $request, Workshop $workshop)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:50',
         ]);
 
         $workshop->update($request->all());

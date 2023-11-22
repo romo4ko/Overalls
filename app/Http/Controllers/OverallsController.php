@@ -32,14 +32,14 @@ class OverallsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'type' => 'required',
-            'term' => 'required',
-            'cost' => 'required',
+            'type' => 'required|max:50',
+            'term' => 'required|max:100',
+            'cost' => 'required|max:10',
         ]);
 
         Overalls::create($request->all());
 
-        return redirect()->route('layout.overalls.index')->with('success','Overall created successfully.');
+        return redirect()->route('overalls.index')->with('success','Overall created successfully.');
     }
 
     /**
@@ -64,9 +64,9 @@ class OverallsController extends Controller
     public function update(Request $request, Overalls $overall)
     {
         $request->validate([
-            'type' => 'required',
-            'term' => 'required',
-            'cost' => 'required',
+            'type' => 'required|max:50',
+            'term' => 'required|max:100',
+            'cost' => 'required|max:10',
         ]);
 
         $overall->update($request->all());

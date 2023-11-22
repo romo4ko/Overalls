@@ -23,16 +23,22 @@ Route::resource('overalls', OverallsController::class);
 Route::resource('receiving', ReceivingController::class);
 Route::resource('workshops', WorkshopController::class);
 
-Route::get('/', function () {
-    return view('layout.app');
-});
+// Route::get('/', function () {
+//     return view('layout.app');
+// });
 
-Route::get('/main', function () {
+Route::get('/', function () {
     return view('layout.main');
 });
 
 Route::get('/queries', [QueriesController::class, 'index'])->name('layout.queries.index');
-// Route::get('/workshops/create', [WorkshopController::class, 'create'])->name('layout.workshops.create');
+Route::get('/queries/result', [QueriesController::class, 'query1'])->name('layout.queries.result');
+
+Route::get('/queries/{q}', [QueriesController::class, 'exec']);
+
+
+
+
 // Route::post('/workshops', [WorkshopController::class, 'store'])->name('layout.workshops.store');
 // Route::get('/workshops/{workshop}', [WorkshopController::class, 'show'])->name('layout.workshops.show');
 // Route::get('/workshops/{workshop}/edit', [WorkshopController::class, 'edit'])->name('layout.workshops.edit');

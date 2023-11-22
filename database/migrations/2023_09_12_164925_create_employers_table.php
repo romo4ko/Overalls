@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('job');
             $table->bigInteger('workshop_id')->unsigned()->index();
             $table->integer('sale');
-
         });
         Schema::table('employers', function($table) {
             $table->softDeletes();

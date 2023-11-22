@@ -20,7 +20,7 @@
                 <strong>Overall:</strong>
                 <td>{{ $receiving->overall->type }}</td> </br>
                 <strong>Datetime:</strong>
-                <td>{{ $receiving->date }}</td> </br>
+                <td>{{ $receiving->created_at }}</td> </br>
             </div>
         </div>
 

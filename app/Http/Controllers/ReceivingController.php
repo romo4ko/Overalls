@@ -41,7 +41,7 @@ class ReceivingController extends Controller
 
         Receiving::create($request->all());
 
-        return redirect()->route('layout.receiving.index')->with('success','Receiving created successfully.');
+        return redirect()->route('receiving.index')->with('success','Receiving created successfully.');
     }
 
     /**

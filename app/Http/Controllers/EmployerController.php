@@ -34,16 +34,16 @@ class EmployerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'job' => 'required', 
+            'firstname' => 'required|min:2|max:30',
+            'lastname' => 'required|min:2|max:30',
+            'job' => 'required|min:2|max:30', 
             'workshop_id' => 'required',
-            'sale',
+            'sale|max:2',
         ]);
 
         Employer::create($request->all());
 
-        return redirect()->route('layout.employers.index')->with('success','Employer created successfully.');
+        return redirect()->route('employers.index')->with('success','Employer created successfully.');
     }
 
     /**
@@ -69,11 +69,11 @@ class EmployerController extends Controller
     public function update(Request $request, Employer $employer)
     {
         $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'job' => 'required', 
+            'firstname' => 'required|min:2|max:30',
+            'lastname' => 'required|min:2|max:30',
+            'job' => 'required|min:2|max:30', 
             'workshop_id' => 'required',
-            'sale' => 'required',
+            'sale|max:2',
         ]);
 
         $employer->update($request->all());

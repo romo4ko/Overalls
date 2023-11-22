@@ -4,109 +4,138 @@ namespace App\Http\Controllers;
 
 use App\Models\Employer;
 use App\Models\Receiving;
-use App\Models\Workshop;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
 
 class QueriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $employers = Employer::all()->sortByDesc('updated_at');
+        $employers = Employer::all()->sortBy('firstname');
 
-        $datetimes = Receiving::all('updated_at')->sortByDesc('updated_at');
-        $years = []; $months = [];
+        $datetimes = Receiving::all('created_at')->sortBy('created_at');
+        $years = []; $months = []; $quarters = [];
         foreach ($datetimes as $datetime) {
-            $year = Carbon::createFromFormat('Y-m-d H:i:s', $datetime->updated_at)->year;
-            $month = Carbon::createFromFormat('Y-m-d H:i:s', $datetime->updated_at)->month;
+            $year = Carbon::createFromFormat('Y-m-d H:i:s', $datetime->created_at)->year;
+            $month = Carbon::createFromFormat('Y-m-d H:i:s', $datetime->created_at)->month;
+            $quarter = Carbon::createFromFormat('Y-m-d H:i:s', $datetime->created_at)->quarter;
             if (!in_array($year, $years)) {
                 $years[] = $year;
             }
             if (!in_array($month, $months)) {
                 $months[] = $month;
             }
+            if (!in_array($quarter, $quarters)) {
+                $quarters[] = $quarter;
+            }
         }
         
-        return view('layout.queries.index', compact('employers', 'years', 'months'));
+        return view('layout.queries.index', compact('employers', 'years', 'months', 'quarters'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function exec(Request $request, string $q)
     {
-        $workshops = Workshop::all();
-        return view('layout.employers.create', compact('workshops'));
+        switch ($q) {
+            case '1':
+                $result = $this->query1($request);
+                break;
+            case '2':
+                $result = $this->query2($request);
+                break;
+            case '3':
+                $result = $this->query3();
+                break;
+            case '4':
+                $result = $this->query4($request);
+                break;
+            case '5':
+                $result = $this->query5($request);
+                break;
+            default:
+                break;
+        }
+        $params = $result[1];
+        $result = $result[0];
+
+        return view('layout.queries.result', compact('result', 'q', 'params'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function query1(Request $request)
     {
-        $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'job' => 'required', 
-            'workshop_id' => 'required',
-            'sale',
-        ]);
-
-        Employer::create($request->all());
-
-        return redirect()->route('layout.employers.index')->with('success','Employer created successfully.');
+        $from = $request->from;
+        $to = $request->to;
+    
+        return [
+            Employer::whereBetween('sale', [$from, $to])->get(), 
+            [
+                'from' => $from, 
+                'to' => $to
+            ]
+        ];
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Employer $employer)
+    public function query2(Request $request)
     {
-        return view('layout.employers.show', compact('employer'));
+        $employer_id = $request->employer_id;
+        $employer = Employer::find($employer_id);
+
+        return [
+            Employer::join('receiving', 'employers.id', '=', 'receiving.employer_id')
+                ->join('overalls', 'overalls.id', '=', 'receiving.overall_id')
+                ->where('employers.id','=', $employer_id)
+                ->select('employers.*', 'overalls.type', 'receiving.created_at')
+                ->get(), 
+            ['employer' => $employer]
+        ];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Employer $employer)
+    public function query3()
     {
-        $workshops = Workshop::all();
-        return view('layout.employers.edit',compact('employer', 'workshops'));
+        return [
+            DB::table('employers')
+                ->select(DB::raw('count(overalls.type) as overall_count, employers.firstname, employers.lastname'))
+                ->join('receiving', 'employers.id', '=', 'receiving.employer_id')
+                ->join('overalls', 'overalls.id', '=', 'receiving.overall_id')
+                ->groupBy('employers.firstname', 'employers.lastname')
+                ->get(), 
+            []
+        ];
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Employer $employer)
+    public function query4(Request $request)
     {
-        $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'job' => 'required', 
-            'workshop_id' => 'required',
-            'sale' => 'required',
-        ]);
-
-        $employer->update($request->all());
-
-        return redirect()->route('employers.index')->with('success','Employer updated successfully');
+        $month = $request->month;
+        $year = $request->year;
+        
+        return [
+            Employer::join('receiving', 'employers.id', '=', 'receiving.employer_id')
+                ->join('overalls', 'overalls.id', '=', 'receiving.overall_id')
+                ->whereYear('receiving.created_at', '=', $year)
+                ->whereMonth('receiving.created_at', '=', $month)
+                ->select('employers.*')
+                ->get(), 
+            [
+                'month' => $month, 
+                'year' => $year
+            ]
+        ];
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Employer $employer)
+    public function query5(Request $request)
     {
-        $employer->delete();
-
-        Receiving::where('employer_id', $employer->id)->delete();
-
-        return redirect()
-            ->route('employers.index')
-            ->with('success','Employer deleted successfully');
+        $quarter = $request->quarter;
+        
+        return [
+            DB::table('receiving')
+                ->select(DB::raw('count(*) as receivings_count'))
+                ->where(DB::raw('QUARTER(receiving.created_at)'),'=', $quarter)
+                ->whereYear('receiving.created_at','=', date('Y'))
+                ->get(), 
+            [
+                'quarter' => $quarter
+            ]
+        ];
     }
 }
