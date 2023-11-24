@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('workshops_logs', function (Blueprint $table) {
+        Schema::create('overalls_logs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('raw_id')->unsigned()->index();
-            $table->string('name');
+            $table->string('type');
+            $table->date('term');
+            $table->double('cost');
             $table->timestamp('updated_at')->useCurrent();
         });
-        Schema::table('workshops_logs', function($table) {
-            $table->foreign('raw_id')->references('id')->on('workshops');
+        Schema::table('overalls_logs', function($table) {
+            $table->foreign('raw_id')->references('id')->on('overalls');
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('workshops_logs');
+        Schema::dropIfExists('overalls_logs');
     }
 };

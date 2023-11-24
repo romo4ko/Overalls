@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Workshop extends Model
 {
@@ -17,5 +18,19 @@ class Workshop extends Model
     protected $fillable = [
         'name',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::updating(function (Workshop $workshop) {
+            DB::table('workshops_logs')->insert(
+                [
+                    'raw_id' => $workshop->getOriginal('id'),
+                    'name' => $workshop->getOriginal('name'),
+                ]
+            );
+        });
+    }
 
 }
