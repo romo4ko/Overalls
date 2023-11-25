@@ -12,7 +12,7 @@ class Overalls extends Model
     use HasFactory;
 
     use SoftDeletes;
-
+    public $table = 'overalls';
     public $timestamps = true;
 
     protected $fillable = [

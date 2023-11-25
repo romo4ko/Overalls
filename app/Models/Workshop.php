@@ -12,7 +12,7 @@ class Workshop extends Model
     use HasFactory;
 
     use SoftDeletes;
-
+    public $table = 'workshops';
     public $timestamps = true;
 
     protected $fillable = [

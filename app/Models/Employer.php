@@ -12,6 +12,8 @@ class Employer extends Model
 	use HasFactory;
 
 	use SoftDeletes;
+
+    public $table = 'employers';
 	public $timestamps = true;
 
 	protected $fillable = [
