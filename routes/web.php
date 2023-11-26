@@ -5,6 +5,7 @@ use App\Http\Controllers\OverallsController;
 use App\Http\Controllers\ReceivingController;
 use App\Http\Controllers\WorkshopController;
 use App\Http\Controllers\QueriesController;
+use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,9 +26,12 @@ Route::resource('workshops', WorkshopController::class);
 
 Route::get('/', function () {
     return view('layout.main');
-});
+})->name('main');
 
 Route::get('/queries', [QueriesController::class, 'index'])->name('layout.queries.index');
 Route::get('/queries/result', [QueriesController::class, 'query1'])->name('layout.queries.result');
 
 Route::get('/queries/{q}', [QueriesController::class, 'exec']);
+
+Route::get('/register', [RegistrationController::class, 'index']);
+Route::post('/register', [RegistrationController::class, 'store']);
