@@ -6,8 +6,9 @@ use App\Http\Controllers\ReceivingController;
 use App\Http\Controllers\WorkshopController;
 use App\Http\Controllers\QueriesController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Middleware\Authenticate;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,19 +20,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('employers', EmployerController::class);
-Route::resource('overalls', OverallsController::class);
-Route::resource('receiving', ReceivingController::class);
-Route::resource('workshops', WorkshopController::class);
+Route::middleware([Authenticate::class])->group(function () {
+
+    Route::resource('employers', EmployerController::class);
+    Route::resource('overalls', OverallsController::class);
+    Route::resource('receiving', ReceivingController::class);
+    Route::resource('workshops', WorkshopController::class);
+
+    Route::get('/queries', [QueriesController::class, 'index'])->name('layout.queries.index');
+    Route::get('/queries/result', [QueriesController::class, 'query1'])->name('layout.queries.result');
+
+    Route::get('/queries/{q}', [QueriesController::class, 'exec']);
+});
 
 Route::get('/', function () {
     return view('layout.main');
 })->name('main');
 
-Route::get('/queries', [QueriesController::class, 'index'])->name('layout.queries.index');
-Route::get('/queries/result', [QueriesController::class, 'query1'])->name('layout.queries.result');
-
-Route::get('/queries/{q}', [QueriesController::class, 'exec']);
-
 Route::get('/register', [RegistrationController::class, 'index']);
 Route::post('/register', [RegistrationController::class, 'store']);
+
+Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/login', [AuthController::class, 'getlogin'])->name('login');
+Route::post('/login', [AuthController::class, 'postlogin']);

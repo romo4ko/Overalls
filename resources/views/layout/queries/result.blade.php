@@ -139,4 +139,13 @@
 
     </table>
 
+<script>
+
+var url = new URL(document.location);
+url = url.toString().split('?')[0];
+window.history.pushState({}, '', url.toString());
+
+</script>
+
+
 @endsection

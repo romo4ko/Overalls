@@ -34,6 +34,7 @@ class UserResource extends Resource
                     ->options([
                         'admin' => 'admin',
                         'guest' => 'guest',
+                        'moderator' => 'moderator',
                     ])
                     ->default('guest'),
                 Forms\Components\DateTimePicker::make('email_verified_at')
