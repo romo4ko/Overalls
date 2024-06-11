@@ -1,23 +1,23 @@
 
-To deploy on local there must be install:
-Git
-Docker
-Composer
+Crud Laravel app for managing the receipt of workwear in the enterprise 
 
-or
+Deploy via Docker:
 
-Git
-Composer
-MySQL 
-
-If you want to deploy via Docker:
-
+```
 git clone https://github.com/r0m04k0/Overalls.git
+```
+```
 cd Overalls
+```
+```
 composer install
-sail up -d --build
-sail php artisan migrate
-
+```
+```
+./vendor/bin/sail up -d --build
+```
+./vendor/bin/sail php artisan migrate
+```
 To fill database:
-sail php artisan db:seed
-
+```
+./vendor/bin/sail php artisan db:seed
+```
