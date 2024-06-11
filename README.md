@@ -15,6 +15,7 @@ composer install
 ```
 ./vendor/bin/sail up -d --build
 ```
+```
 ./vendor/bin/sail php artisan migrate
 ```
 To fill database:
